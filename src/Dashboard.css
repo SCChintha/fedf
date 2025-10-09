@@ -1,0 +1,238 @@
+/* Base styles */
+.dashboard {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 20px;
+}
+
+.dashboard.dark-mode {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.dashboard-header {
+  background: linear-gradient(90deg, #ff9933 0%, #ffffff 50%, #138808 100%);
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.header-controls input {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  min-width: 300px;
+}
+
+.theme-toggle {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #000080;
+  color: white;
+  cursor: pointer;
+}
+
+.dashboard-grid {
+  max-width: 1200px;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.preamble-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.preamble-scroll-container {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  padding-right: 10px;
+  /* Webkit (Chrome, Safari) scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #ff9933;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: #138808;
+  }
+}
+
+.preamble-content {
+  position: relative;
+  max-height: 150px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding-right: 10px;
+}
+
+.preamble-content p {
+  white-space: pre-line;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.preamble-content:not(.expanded)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(transparent, white);
+  pointer-events: none;
+}
+
+.dark-mode .preamble-content:not(.expanded)::after {
+  background: linear-gradient(transparent, #2d2d2d);
+}
+
+.expand-button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background: #ff9933;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+  margin-top: 1rem;
+}
+
+.expand-button:hover {
+  background: #138808;
+}
+
+.dark-mode .preamble-card {
+  background: #2d2d2d;
+  color: #fff;
+}
+
+.featured-sections,
+.amendments-section,
+.facts-widget {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.dark-mode .featured-sections,
+.dark-mode .amendments-section,
+.dark-mode .facts-widget {
+  background: #2d2d2d;
+}
+
+.nav-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.nav-tile {
+  background: #f0f0f0;
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  outline: none;
+}
+
+.nav-tile:focus {
+  box-shadow: 0 0 0 2px #000080;
+}
+
+.feature-card {
+  border-left: 4px solid #ff9933;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.amendments-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.amendment-card {
+  border-left: 4px solid #138808;
+  padding: 1rem;
+}
+
+.fact-card {
+  text-align: center;
+  padding: 1rem;
+}
+
+.fact-card button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #000080;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.read-more {
+  color: #000080;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.read-more:hover,
+.read-more:focus {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .header-controls input {
+    min-width: unset;
+    width: 100%;
+  }
+}

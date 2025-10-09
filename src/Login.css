@@ -1,0 +1,239 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Indian flag gradient */
+  background: linear-gradient(180deg, #ff9933 0%, #ffffff 33%, #138808 66%, #000080 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add image boundaries as overlay */
+.login::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px; /* Adjust size as needed */
+  height: 300px;
+  background: url('./assets/ashoka.png') no-repeat center center;
+  background-size: contain;
+  opacity: 0.25; /* Faint watermark effect */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure login box is above the image */
+.rightpanel, .card, .signup, .overlay {
+  position: relative;
+  z-index: 1;
+}
+
+.leftpanel {
+  display: none; /* Hide left panel for focus on login box */
+}
+
+.rightpanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.5); /* 50% transparent */
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  /*backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);*/
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 2rem 2.5rem;
+  min-width: 320px;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card h2 {
+  color: #000080;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.card label {
+  font-weight: 500;
+  color: #000080;
+  margin-bottom: 0.2rem;
+}
+
+.card input, .card select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.7);
+  transition: border-color 0.2s;
+}
+
+.card input:focus, .card select:focus {
+  border-color: #138808;
+  outline: none;
+}
+
+.card button {
+  width: 100%;
+  padding: 0.7rem;
+  background: #ff9933;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.card button:hover {
+  background: #138808;
+}
+
+.card p {
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.card span {
+  color: #000080;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.signup {
+  background: rgba(255,255,255,0.5);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  /*backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);*/
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 2rem 2.5rem;
+  min-width: 320px;
+  max-width: 370px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.signup h2 {
+  color: #ff9933;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.signup label {
+  font-weight: 500;
+  color: #000080;
+  margin-bottom: 0.2rem;
+}
+
+.signup input, .signup select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 0.2rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.7);
+  transition: border-color 0.2s;
+}
+
+.signup input:focus, .signup select:focus {
+  border-color: #138808;
+  outline: none;
+}
+
+.regButton {
+  width: 100%;
+  padding: 0.7rem;
+  background: #138808;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+.regButton:hover {
+  background: #000080;
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #fff;
+  color: #d32f2f;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  line-height: 1.8rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .login {
+    flex-direction: column;
+  }
+  .rightpanel {
+    width: 100vw;
+    height: 100vh;
+    align-items: flex-start;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .card, .signup {
+    padding: 1rem;
+    min-width: 90vw;
+    max-width: 95vw;
+  }
+}

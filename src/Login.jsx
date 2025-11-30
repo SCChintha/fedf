@@ -1,5 +1,6 @@
 //proj updated
 import React, { Component } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const roles = [
@@ -10,9 +11,9 @@ const roles = [
   { value: 'legal_expert', label: 'Legal Expert' }
 ];
 
-class Login extends Component {
-    constructor() {
-        super();
+class LoginInner extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
             signup: false,
             signupData: {
@@ -29,7 +30,9 @@ class Login extends Component {
                 password: "",
                 role: ""
             },
-            errData: {}
+            errData: {},
+            apiError: "",
+            apiSuccess: ""
         };
     }
 
@@ -69,38 +72,96 @@ class Login extends Component {
     registerUser = (e) => {
         e.preventDefault();
         if (!this.validateSignup()) return;
-        alert("Registered Successfully...");
-        this.setState({
-            signup: false,
-            signupData: {
-                firstName: "",
-                lastName: "",
-                email: "",
-                phone: "",
-                password: "",
-                confirmPassword: "",
-                role: ""
+        const { signupData } = this.state;
+
+        fetch('http://localhost:5000/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            errData: {}
-        });
+            body: JSON.stringify({
+                firstName: signupData.firstName,
+                lastName: signupData.lastName,
+                email: signupData.email,
+                phone: signupData.phone,
+                password: signupData.password,
+                role: signupData.role
+            })
+        })
+            .then(async (res) => {
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    throw new Error(data.message || 'Registration failed');
+                }
+                this.setState({
+                    signup: false,
+                    signupData: {
+                        firstName: "",
+                        lastName: "",
+                        email: "",
+                        phone: "",
+                        password: "",
+                        confirmPassword: "",
+                        role: ""
+                    },
+                    errData: {},
+                    apiError: "",
+                    apiSuccess: data.message || 'Registered successfully. You can now login.'
+                });
+            })
+            .catch((err) => {
+                this.setState({ apiError: err.message || 'Registration failed', apiSuccess: "" });
+            });
     };
 
     handleLogin = (e) => {
         e.preventDefault();
-        // Add login logic here
+        const { email, password, role } = this.state.loginData;
+        if (!email || !password || !role) {
+            alert("Please fill in role, email and password to login.");
+            return;
+        }
+        fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password, role })
+        })
+            .then(async (res) => {
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    throw new Error(data.message || 'Login failed');
+                }
+                this.setState({ apiError: "", apiSuccess: data.message || 'Login successful' });
+                if (this.props.onLoginSuccess) {
+                    this.props.onLoginSuccess(data.user);
+                } else {
+                    // default: navigate to dashboard
+                    this.props.navigate('/dashboard');
+                }
+            })
+            .catch((err) => {
+                this.setState({ apiError: err.message || 'Login failed', apiSuccess: "" });
+            });
     };
 
     render() {
-        const { signup, signupData, loginData, errData } = this.state;
+        const { signup, signupData, loginData, errData, apiError, apiSuccess } = this.state;
         return (
-            <div className='login'>
-                <div className='leftpanel'>
-                    <h1>Welcome Back!</h1>
-                    <p>Access and manage your task efficiently</p>
-                </div>
-                <div className='rightpanel'>
+            <div className='login login-full-bg'>
+                <button
+                    type="button"
+                    className="back-home-button"
+                    onClick={() => this.props.navigate("/")}
+                >
+                    4 Back to Home
+                </button>
+                <div className='rightpanel login-card-right'>
                     <form className='card' onSubmit={this.handleLogin}>
                         <h2>Login</h2>
+                        {apiError && <div className="error" style={{ marginBottom: '8px' }}>{apiError}</div>}
+                        {apiSuccess && <div className="success" style={{ marginBottom: '8px', color: '#138808' }}>{apiSuccess}</div>}
                         <label htmlFor="loginRole">Role</label>
                         <select
                             id="loginRole"
@@ -258,6 +319,11 @@ class Login extends Component {
             </div>
         );
     }
+}
+
+function Login(props) {
+    const navigate = useNavigate();
+    return <LoginInner {...props} navigate={navigate} />;
 }
 
 export default Login;

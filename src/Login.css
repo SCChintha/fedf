@@ -10,44 +10,46 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Indian flag gradient */
-  background: linear-gradient(180deg, #ff9933 0%, #ffffff 33%, #138808 66%, #000080 100%);
   position: relative;
   overflow: hidden;
 }
 
-/* Add image boundaries as overlay */
-.login::before {
-  content: "";
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px; /* Adjust size as needed */
-  height: 300px;
-  background: url('./assets/ashoka.png') no-repeat center center;
-  background-size: contain;
-  opacity: 0.25; /* Faint watermark effect */
-  pointer-events: none;
-  z-index: 0;
+.login-full-bg {
+  background-image: url('./assets/web_background.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
-/* Ensure login box is above the image */
 .rightpanel, .card, .signup, .overlay {
   position: relative;
   z-index: 1;
 }
 
-.leftpanel {
-  display: none; /* Hide left panel for focus on login box */
-}
-
-.rightpanel {
+.login-card-right {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   width: 100vw;
   height: 100vh;
+  padding-right: 8vw;
+}
+
+.back-home-button {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.8rem;
+  z-index: 2;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.back-home-button:hover {
+  background: rgba(0,0,0,0.8);
 }
 
 .card {
@@ -219,13 +221,8 @@ body, html {
 }
 
 @media (max-width: 900px) {
-  .login {
-    flex-direction: column;
-  }
-  .rightpanel {
-    width: 100vw;
-    height: 100vh;
-    align-items: flex-start;
+  .login-card-right {
+    padding-right: 0;
     justify-content: center;
   }
 }
